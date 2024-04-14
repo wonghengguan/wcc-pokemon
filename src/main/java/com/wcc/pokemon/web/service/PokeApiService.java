@@ -1,4 +1,3 @@
-import com.wcc.dto.*;
 import com.wcc.model.Pokemon;
 import com.wcc.model.PokemonDetails;
 import java.util.List;
