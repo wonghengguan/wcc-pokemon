@@ -1,0 +1,23 @@
+/* pokemon-list.component.css */
+
+.table {
+  width: 100%;
+}
+
+td {
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  td {
+    display: inline-block;
+    width: calc(50% - 20px); /* Adjust width for smaller screens */
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+}

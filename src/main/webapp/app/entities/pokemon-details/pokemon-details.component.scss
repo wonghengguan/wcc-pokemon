@@ -1,0 +1,28 @@
+/* pokemon-details.component.css */
+
+.pokemon-details {
+  /* Add styling for the detail container */
+}
+
+.pokemon-image {
+  /* Add styling for the Pokemon image */
+}
+
+.pokemon-info {
+  /* Add styling for the Pokemon info */
+}
+
+@media (max-width: 768px) {
+  .pokemon-details {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .pokemon-image {
+    max-width: 100%; /* Make image responsive */
+    height: auto; /* Make image responsive */
+  }
+
+  .pokemon-info {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+}
