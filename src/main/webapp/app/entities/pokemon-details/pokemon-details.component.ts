@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { PokemonApiService } from '../pokemon/pokemon.service';
+import { PokemonService } from '../pokemon/pokemon.service';
 import { CommonModule } from '@angular/common';
+import { PokemonDetails } from './pokemon-details.model';
 
 @Component({
   selector: 'jhi-pokemon-details',
@@ -16,7 +17,7 @@ export class PokemonDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private pokemonApiService: PokemonApiService,
+    private pokemonService: PokemonService,
   ) {}
 
   ngOnInit(): void {
@@ -28,15 +29,17 @@ export class PokemonDetailsComponent {
     });
   }
 
-  async getPokemonDetails(pokemonName: string) {
-    try {
-      this.pokemonDetails = await this.pokemonApiService.getPokemonDetails(pokemonName);
-
-      const pokemonNameUppecase = this.toUppercase(pokemonName);
-      document.title = `${pokemonNameUppecase}'s details`;
-    } catch (error) {
-      // Handle error
-    }
+  getPokemonDetails(pokemonName: string) {
+    this.pokemonService.getPokemonDetails(pokemonName).subscribe({
+      next: (data: PokemonDetails) => {
+        this.pokemonDetails = data; // Assign the received data to pokemonDetails
+      },
+      error: error => {
+        console.error('Error fetching Pokemon details:', error);
+      },
+    });
+    const pokemonNameUppecase = this.toUppercase(pokemonName);
+    document.title = `${pokemonNameUppecase}'s details`;
   }
 
   goBack() {

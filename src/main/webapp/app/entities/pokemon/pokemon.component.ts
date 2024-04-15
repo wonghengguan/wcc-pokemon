@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { PokemonApiService } from './pokemon.service';
+import { PokemonService } from './pokemon.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ItemCountComponent } from 'app/shared/pagination';
+import { Pokemon } from './pokemon.model';
+import { PaginatedResponse } from '../paginated-response.model';
 
 @Component({
   selector: 'jhi-pokemon',
@@ -12,42 +14,32 @@ import { ItemCountComponent } from 'app/shared/pagination';
   styleUrl: './pokemon.component.scss',
 })
 export class PokemonComponent {
-  pokemonList: any[] = [];
+  pokemonList: Pokemon[] = [];
   currentPage = 1;
-  totalPokemon = 0;
   pageSize = 20;
-  pages: number[] = [];
   totalPages = 0;
 
-  constructor(private pokemonApiService: PokemonApiService) {}
+  constructor(private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
-    this.getPokemonList(this.currentPage);
+    this.loadPokemon();
   }
 
-  async getPokemonList(page: number) {
-    try {
-      const offset = (page - 1) * this.pageSize;
-      const response = await this.pokemonApiService.getPokemonList(this.pageSize, offset);
+  loadPokemon(): void {
+    const offset = (this.currentPage - 1) * this.pageSize;
+    this.pokemonService.getPokemonList(offset, this.pageSize).subscribe((response: PaginatedResponse) => {
       this.pokemonList = response.results;
-      this.totalPokemon = response.count;
-      this.calculatePages();
-    } catch (error) {
-      // Handle error
-    }
+      this.totalPages = Math.ceil(response.count / this.pageSize);
+    });
   }
 
-  onPageChange(page: number) {
+  toUppercase(pokemonName: string) {
+    return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+  }
+
+  onPageChange(page: number): void {
     this.currentPage = page;
-    this.getPokemonList(this.currentPage);
-  }
-
-  calculatePages() {
-    this.totalPages = Math.ceil(this.totalPokemon / this.pageSize);
-    this.pages = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      this.pages.push(i);
-    }
+    this.loadPokemon();
   }
 
   get pokemonListChunks(): any[][] {
@@ -56,9 +48,5 @@ export class PokemonComponent {
       chunkedArray.push(this.pokemonList.slice(i, i + 5));
     }
     return chunkedArray;
-  }
-
-  toUppercase(pokemonName: string) {
-    return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   }
 }

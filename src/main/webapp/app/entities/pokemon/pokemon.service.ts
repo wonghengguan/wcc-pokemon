@@ -1,36 +1,38 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Pokemon } from './pokemon.model';
+import { PokemonDetails } from '../pokemon-details/pokemon-details.model';
+import { PaginatedResponse } from '../paginated-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PokemonApiService {
-  private apiUrl = 'https://pokeapi.co/api/v2';
+export class PokemonService {
+  private baseUrl = 'http://localhost:8080/api/v1/pokemon';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  async getPokemonList(limit: number, offset: number): Promise<any> {
-    try {
-      const response = await axios.get(`${this.apiUrl}/pokemon`, {
-        params: {
-          limit: limit,
-          offset: offset,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching Pokemon list:', error);
-      throw error;
-    }
+  getPokemonList(offset: number, limit: number): Observable<PaginatedResponse> {
+    let params = new HttpParams().set('limit', limit.toString()).set('offset', offset.toString());
+
+    return this.http.get<any>(this.baseUrl, { params }).pipe(
+      map(response => ({
+        results: response.results.map((pokemon: any) => new Pokemon(pokemon.name, pokemon.url)),
+        count: response.count,
+        nextOffset: response.next ? this.getOffsetFromUrl(response.next) : null,
+        previousOffset: response.previous ? this.getOffsetFromUrl(response.previous) : null,
+      })),
+    );
   }
 
-  async getPokemonDetails(pokemonName: string): Promise<any> {
-    try {
-      const response = await axios.get(`${this.apiUrl}/pokemon/${pokemonName}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching details for ${pokemonName}:`, error);
-      throw error;
-    }
+  getPokemonDetails(pokemonName: string): Observable<PokemonDetails> {
+    return this.http.get<PokemonDetails>(`${this.baseUrl}/${pokemonName}`);
+  }
+
+  private getOffsetFromUrl(url: string): number {
+    const params = new URLSearchParams(url.split('?')[1]);
+    return parseInt(params.get('offset') || '0', 10);
   }
 }
