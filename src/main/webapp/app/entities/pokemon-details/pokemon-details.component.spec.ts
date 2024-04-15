@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs'; // Import of from rxjs
+import { of } from 'rxjs';
 import { PokemonDetailsComponent } from './pokemon-details.component';
-import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
+import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('PokemonDetailsComponent', () => {
@@ -9,17 +9,13 @@ describe('PokemonDetailsComponent', () => {
   let fixture: ComponentFixture<PokemonDetailsComponent>;
 
   beforeEach(async () => {
-    // Create a mock ActivatedRoute
     const mockActivatedRoute = {
-      paramMap: of({ get: () => 'pokemonName' }), // Mock paramMap
+      paramMap: of({ get: () => 'pokemonName' }),
     };
 
     await TestBed.configureTestingModule({
-      declarations: [PokemonDetailsComponent],
-      imports: [HttpClientModule],
-      providers: [
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }, // Provide mock ActivatedRoute
-      ],
+      imports: [HttpClientModule], // Add any necessary imports
+      providers: [{ provide: ActivatedRoute, useValue: mockActivatedRoute }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PokemonDetailsComponent);
