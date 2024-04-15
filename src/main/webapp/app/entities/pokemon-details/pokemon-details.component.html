@@ -1,29 +1,37 @@
 <div *ngIf="pokemonDetails" class="pokemon-details">
-  <div class="pokemon-image">
-    <h2>{{ toUppercase(pokemonDetails.name) }}</h2>
-    <img [src]="pokemonDetails.sprites.front_default" alt="{{ pokemonDetails.name }}" />
+  <div class="row">
+    <div class="col-md-6">
+      <div class="pokemon-image">
+        <h2>{{ toUppercase(pokemonDetails.name) }}</h2>
+        <img [src]="pokemonDetails.sprites.front_default" alt="{{ pokemonDetails.name }}" class="img-fluid" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="pokemon-info">
+        <h3>Abilities:</h3>
+        <ul>
+          <li *ngFor="let ability of pokemonDetails.abilities">
+            {{ ability.ability.name }}
+          </li>
+        </ul>
+        <h3>Type:</h3>
+        <ul>
+          <li *ngFor="let type of pokemonDetails.types">
+            {{ type.type.name }}
+          </li>
+        </ul>
+        <h3>Stats:</h3>
+        <ul>
+          <li *ngFor="let stat of pokemonDetails.stats">{{ stat.stat.name }} : {{ stat.base_stat }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="pokemon-info">
-    <h3>Abilities:</h3>
-    <ul>
-      <li *ngFor="let ability of pokemonDetails.abilities">
-        {{ ability.ability.name }}
-      </li>
-    </ul>
-    <h3>Type:</h3>
-    <ul>
-      <li *ngFor="let type of pokemonDetails.types">
-        {{ type.type.name }}
-      </li>
-    </ul>
-    <h3>Stats:</h3>
-    <ul>
-      <li *ngFor="let stat of pokemonDetails.stats">{{ stat.stat.name }} : {{ stat.base_stat }}</li>
-    </ul>
-  </div>
-  <div>
-    <!-- Pokemon details display -->
-    <button (click)="goBack()">Back to Pokemon List</button>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Pokemon details display -->
+      <button (click)="goBack()" class="btn btn-primary">Back to Pokemon List</button>
+    </div>
   </div>
   <!-- Add more details as needed -->
 </div>

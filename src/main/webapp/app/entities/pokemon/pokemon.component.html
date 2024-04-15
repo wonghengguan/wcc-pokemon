@@ -1,24 +1,56 @@
-<div>
-  <table class="table">
-    <tr *ngFor="let row of pokemonListChunks">
-      <ng-container *ngFor="let pokemon of row">
-        <td *ngIf="pokemon">
-          <a [routerLink]="['/details', pokemon.name]">
-            <img
-              [src]="
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.url.split('/').slice(-2, -1) + '.png'
-              "
-              alt="{{ pokemon.name }}"
-            />
-            {{ toUppercase(pokemon.name) }}
-          </a>
-        </td>
-      </ng-container>
-    </tr>
-  </table>
-</div>
-<div>
-  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
-  Page {{ currentPage }} of {{ totalPages }}
-  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row">
+        <ng-container *ngFor="let row of pokemonListChunks">
+          <div class="col-md-3 mb-3" *ngFor="let pokemon of row">
+            <a [routerLink]="['/details', pokemon.name]" class="d-block text-center">
+              <img
+                [src]="
+                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+                  pokemon.url.split('/').slice(-2, -1) +
+                  '.png'
+                "
+                alt="{{ pokemon.name }}"
+                class="img-fluid mb-2"
+              />
+              <span class="d-block">{{ toUppercase(pokemon.name) }}</span>
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-6">
+      <nav aria-label="Pagination" class="text-center">
+        <div class="d-flex justify-content-center">
+          <ul class="pagination">
+            <li class="page-item" (click)="onPageChange(1)" [class.disabled]="currentPage === 1">
+              <a class="page-link">First</a>
+            </li>
+            <li class="page-item" (click)="onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+              <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item">
+              <input type="number" class="form-control" [(ngModel)]="goToPage" min="1" max="{{ totalPages }}" style="width: 80px" />
+            </li>
+            <li class="page-item">
+              <button class="btn btn-primary" (click)="goToExactPage()">Go</button>
+            </li>
+            <li class="page-item" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+              <a class="page-link">Next</a>
+            </li>
+            <li class="page-item" (click)="onPageChange(totalPages)" [class.disabled]="currentPage === totalPages">
+              <a class="page-link">Last</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <span class="page-link">Page {{ currentPage }} of {{ totalPages }}</span>
+        </div>
+      </nav>
+    </div>
+  </div>
 </div>

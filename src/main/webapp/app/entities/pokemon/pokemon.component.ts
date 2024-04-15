@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { ItemCountComponent } from 'app/shared/pagination';
 import { Pokemon } from './pokemon.model';
 import { PaginatedResponse } from '../paginated-response.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'jhi-pokemon',
   standalone: true,
-  imports: [CommonModule, RouterModule, ItemCountComponent],
+  imports: [CommonModule, RouterModule, ItemCountComponent, FormsModule],
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.scss',
 })
@@ -18,6 +19,7 @@ export class PokemonComponent {
   currentPage = 1;
   pageSize = 20;
   totalPages = 0;
+  goToPage: number = 1;
 
   constructor(private pokemonService: PokemonService) {}
 
@@ -39,6 +41,7 @@ export class PokemonComponent {
 
   onPageChange(page: number): void {
     this.currentPage = page;
+    this.goToPage = this.currentPage;
     this.loadPokemon();
   }
 
@@ -48,5 +51,15 @@ export class PokemonComponent {
       chunkedArray.push(this.pokemonList.slice(i, i + 5));
     }
     return chunkedArray;
+  }
+
+  goToExactPage(): void {
+    // Ensure the input value is valid
+    if (this.goToPage >= 1 && this.goToPage <= this.totalPages) {
+      this.onPageChange(this.goToPage); // Call onPageChange method with the selected page number
+    } else {
+      // Handle invalid page number (e.g., display an error message)
+      console.error('Invalid page number');
+    }
   }
 }
