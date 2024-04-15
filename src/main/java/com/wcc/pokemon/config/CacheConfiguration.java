@@ -42,15 +42,6 @@ public class CacheConfiguration {
         };
     }
 
-    private void createCache(javax.cache.CacheManager cm, String cacheName) {
-        javax.cache.Cache<Object, Object> cache = cm.getCache(cacheName);
-        if (cache != null) {
-            cache.clear();
-        } else {
-            cm.createCache(cacheName, jcacheConfiguration);
-        }
-    }
-
     @Autowired(required = false)
     public void setGitProperties(GitProperties gitProperties) {
         this.gitProperties = gitProperties;

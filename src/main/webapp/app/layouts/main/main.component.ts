@@ -20,8 +20,8 @@ export default class MainComponent implements OnInit {
 
   constructor() {}
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    // try to log in automatically
-    // this.accountService.identity().subscribe();
+    // Intentionally leaving it empty
   }
 }

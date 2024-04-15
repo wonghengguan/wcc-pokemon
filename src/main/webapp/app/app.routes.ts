@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'details/:name',
     component: PokemonDetailsComponent,
-    title: `${name}'s details`,
+    title: 'Pokemon details',
   },
   ...errorRoute,
 ];

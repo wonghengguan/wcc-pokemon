@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokemonService } from './pokemon.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.scss',
 })
-export class PokemonComponent {
+export class PokemonComponent implements OnInit {
   pokemonList: Pokemon[] = [];
   currentPage = 1;
   pageSize = 20;

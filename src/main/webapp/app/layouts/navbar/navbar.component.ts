@@ -5,7 +5,6 @@ import SharedModule from 'app/shared/shared.module';
 import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive';
 import { VERSION } from 'app/app.constants';
 import { AccountService } from 'app/core/auth/account.service';
-import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import NavbarItem from './navbar-item.model';
@@ -25,7 +24,6 @@ export default class NavbarComponent implements OnInit {
   account = inject(AccountService).trackCurrentAccount();
   entitiesNavbarItems: NavbarItem[] = [];
 
-  private loginService = inject(LoginService);
   private profileService = inject(ProfileService);
   private router = inject(Router);
 
@@ -53,7 +51,6 @@ export default class NavbarComponent implements OnInit {
 
   logout(): void {
     this.collapseNavbar();
-    this.loginService.logout();
     this.router.navigate(['']);
   }
 
