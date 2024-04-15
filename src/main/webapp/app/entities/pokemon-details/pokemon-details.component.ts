@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonService } from '../pokemon/pokemon.service';
 import { PokemonDetails } from './pokemon-details.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'jhi-pokemon-details',
   templateUrl: './pokemon-details.component.html',
   styleUrls: ['./pokemon-details.component.scss'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class PokemonDetailsComponent implements OnInit {
   pokemonDetails: PokemonDetails | undefined;
