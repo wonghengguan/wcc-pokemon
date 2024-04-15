@@ -10,29 +10,11 @@ Device used to run this project will have below requirements:
 2. Java17 set at JAVA_HOME
 3. npm
 
-## Development
+## Starting the project
 
 Run the following commands in two separate terminals to start the project
 
 ```
 ./gradlew
 npm start
-```
-
-## Testing
-
-### Client tests
-
-Unit tests are run by [Jest][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
-
-```
-npm test
-```
-
-### Spring Boot tests
-
-To launch your application's tests, run:
-
-```
-./gradlew test integrationTest jacocoTestReport
 ```
