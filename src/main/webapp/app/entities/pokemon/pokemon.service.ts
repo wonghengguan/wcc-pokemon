@@ -15,7 +15,7 @@ export class PokemonService {
   constructor(private http: HttpClient) {}
 
   getPokemonList(offset: number, limit: number): Observable<PaginatedResponse> {
-    let params = new HttpParams().set('limit', limit.toString()).set('offset', offset.toString());
+    const params = new HttpParams().set('limit', limit.toString()).set('offset', offset.toString());
 
     return this.http.get<any>(this.baseUrl, { params }).pipe(
       map(response => ({
@@ -33,6 +33,6 @@ export class PokemonService {
 
   private getOffsetFromUrl(url: string): number {
     const params = new URLSearchParams(url.split('?')[1]);
-    return parseInt(params.get('offset') || '0', 10);
+    return parseInt(params.get('offset') ?? '0', 10);
   }
 }

@@ -35,7 +35,7 @@ export class PokemonComponent {
     });
   }
 
-  toUppercase(pokemonName: string) {
+  toUppercase(pokemonName: string): string {
     return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   }
 

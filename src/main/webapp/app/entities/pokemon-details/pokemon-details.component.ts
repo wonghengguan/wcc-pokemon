@@ -29,7 +29,7 @@ export class PokemonDetailsComponent {
     });
   }
 
-  getPokemonDetails(pokemonName: string) {
+  getPokemonDetails(pokemonName: string): void {
     this.pokemonService.getPokemonDetails(pokemonName).subscribe({
       next: (data: PokemonDetails) => {
         this.pokemonDetails = data; // Assign the received data to pokemonDetails
@@ -42,12 +42,12 @@ export class PokemonDetailsComponent {
     document.title = `${pokemonNameUppecase}'s details`;
   }
 
-  goBack() {
+  goBack(): void {
     // Navigate back to Pokemon list page
     this.router.navigate(['']);
   }
 
-  toUppercase(pokemonName: string) {
+  toUppercase(pokemonName: string): string {
     return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   }
 }
